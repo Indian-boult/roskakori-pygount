@@ -34,11 +34,47 @@ class OptionError(Error):
 
 
 def as_list(items_or_text):
-    return ""
+    """
+    Convert a comma-separated string or an iterable to a list.
+    
+    :param items_or_text: Either a comma-separated string or an iterable
+    :return: List of items with whitespace stripped from string items
+    """
+    if isinstance(items_or_text, str):
+        if not items_or_text:
+            return []
+        # Split by comma and strip whitespace from each item
+        items = [item.strip() for item in items_or_text.split(',')]
+        # Filter out empty strings that might result from multiple commas
+        return [item for item in items if item]
+    else:
+        # Convert any iterable to a list
+        return list(items_or_text)
 
 
 def regex_from(pattern, is_shell_pattern=False):
-    return ""
+    """
+    Convert a pattern to a compiled regular expression.
+    
+    :param pattern: Either a string pattern or a compiled regex
+    :param is_shell_pattern: If True, treat string pattern as shell pattern (with *, ?, etc.)
+    :return: Compiled regular expression
+    """
+    if isinstance(pattern, _REGEX_TYPE):
+        # Already a compiled regex, return as is
+        return pattern
+    
+    if not isinstance(pattern, str):
+        raise TypeError("Pattern must be a string or compiled regular expression, got: {0}".format(type(pattern)))
+    
+    if is_shell_pattern:
+        # Convert shell pattern to regex pattern
+        # fnmatch.translate converts shell patterns to regex patterns
+        regex_pattern = fnmatch.translate(pattern)
+        return re.compile(regex_pattern)
+    else:
+        # Treat as regular expression pattern
+        return re.compile(pattern)
 
 
 def regexes_from(patterns_text, default_patterns_text=None, source=None):
