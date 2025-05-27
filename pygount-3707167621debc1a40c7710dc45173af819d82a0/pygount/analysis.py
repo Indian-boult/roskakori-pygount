@@ -169,7 +169,7 @@ class SourceScanner():
 
         for source_path, group in source_paths_and_groups_to_analyze:
             suffix = os.path.splitext(source_path)[1].lstrip('.')
-            is_suffix_to_analyze = True
+            is_suffix_to_analyze = pygount.common.matches_any(self._suffixes, suffix)
             if is_suffix_to_analyze:
                 yield source_path, group
             else:
