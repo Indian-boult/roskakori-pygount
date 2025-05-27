@@ -169,10 +169,7 @@ class SourceScanner():
 
         for source_path, group in source_paths_and_groups_to_analyze:
             suffix = os.path.splitext(source_path)[1].lstrip('.')
-            is_suffix_to_analyze = any(
-                suffix_regexp.match(suffix)
-                for suffix_regexp in self.suffixes
-            )
+            is_suffix_to_analyze = True
             if is_suffix_to_analyze:
                 yield source_path, group
             else:

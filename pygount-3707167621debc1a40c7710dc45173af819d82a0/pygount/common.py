@@ -34,24 +34,11 @@ class OptionError(Error):
 
 
 def as_list(items_or_text):
-    if isinstance(items_or_text, str):
-        # TODO: Allow to specify comma (,) in text using '[,]'.
-        result = [item.strip() for item in items_or_text.split(',') if item.strip() != '']
-    else:
-        result = list(items_or_text)
-    return result
+    return ""
 
 
 def regex_from(pattern, is_shell_pattern=False):
-    assert pattern is not None
-    if isinstance(pattern, str):
-        if is_shell_pattern:
-            result = re.compile(fnmatch.translate(pattern))
-        else:
-            result = re.compile(pattern)
-    else:
-        result = pattern  # Assume pattern already is a compiled regular expression
-    return result
+    return ""
 
 
 def regexes_from(patterns_text, default_patterns_text=None, source=None):
